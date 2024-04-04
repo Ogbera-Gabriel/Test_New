@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { Typography, TextField, Button, Box } from '@mui/material';
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -8,8 +9,7 @@ const SignUpPage = () => {
     password: '',
     confirmPassword: '',
   });
-  const [errorMessage, setErrorMessage] = useState(undefined)
-
+  const [errorMessage, setErrorMessage] = useState(undefined);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -29,45 +29,81 @@ const SignUpPage = () => {
         password: formData.password,
       });
       localStorage.setItem('token', response.data.token);
-      navigate('/signin');
+      navigate('/signin'); // Redirect to Sign In page after successful registration
     } catch (error) {
-        const errorDescription = error.response;
-        console.log(errorDescription)
+      const errorDescription = error.response;
+      console.log(errorDescription);
     }
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Sign Up</button>
-      </form>
-      {errorMessage && <p>{errorMessage}</p>}
-    </div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+      }}
+    >
+      <Box
+        sx={{
+          p: 4,
+          maxWidth: 400,
+          width: '100%',
+          bgcolor: 'background.paper',
+          boxShadow: 1,
+          borderRadius: 1,
+        }}
+      >
+        <Typography variant="h2" gutterBottom>
+          Sign Up
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            label="Email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            label="Password"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            label="Confirm Password"
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+            fullWidth
+            sx={{ mb: 2 }}
+          />
+          <Button variant="contained" type="submit" fullWidth>
+            Sign Up
+          </Button>
+        </form>
+        {errorMessage && (
+          <Typography variant="body1" color="error" mt={2}>
+            {errorMessage}
+          </Typography>
+        )}
+        <Typography variant="body1" mt={2}>
+          Already have an account? <Link to="/signin">Sign In</Link>
+        </Typography>
+      </Box>
+    </Box>
   );
 };
 
