@@ -12,10 +12,6 @@ const HomePage = () => {
     navigate('/signin');
   };
 
-  const handleCreateUser = () => {
-    navigate('/create-user');
-  };
-
   if (!token) {
     navigate('/signin');
     return null;
@@ -26,22 +22,12 @@ const HomePage = () => {
       <Typography variant="h2" component="h1" gutterBottom>
         Welcome
       </Typography>
-      <Grid container justifyContent="space-between" alignItems="center">
-        <Grid item>
-          <Button variant="contained" color="primary" onClick={handleCreateUser}>
-            Create User
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button variant="contained" onClick={handleLogout} sx={{ ml: 2 }}>
-            Logout
-          </Button>
-        </Grid>
-      </Grid>
+      <Button variant="contained" onClick={handleLogout}>
+        Logout
+      </Button>
       <UserList />
     </Container>
   );
 };
 
 export default HomePage;
-
