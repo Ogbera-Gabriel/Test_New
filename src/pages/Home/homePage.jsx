@@ -2,7 +2,6 @@ import React from 'react';
 
 const HomePage = () => {
   const token = localStorage.getItem('token');
-  const firstName = localStorage.getItem('firstName');
   if (!token) {
     window.location.href = '/signin';
     return null;
@@ -10,8 +9,7 @@ const HomePage = () => {
 
   return (
     <div>
-        hello world
-      <h2>Welcome {firstName}</h2>
+      <h2>Welcome</h2>
     </div>
   );
 };
