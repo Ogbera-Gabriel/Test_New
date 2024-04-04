@@ -10,6 +10,7 @@ const HomePage = () => {
 
   return (
     <div>
+        hello world
       <h2>Welcome {firstName}</h2>
     </div>
   );

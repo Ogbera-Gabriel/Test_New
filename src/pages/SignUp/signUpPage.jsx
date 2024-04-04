@@ -31,8 +31,8 @@ const SignUpPage = () => {
       localStorage.setItem('token', response.data.token);
       navigate('/signin');
     } catch (error) {
-        const errorDescription = error.response.data.message;
-        setErrorMessage(errorDescription);
+        const errorDescription = error.response;
+        console.log(errorDescription)
     }
   };
 
