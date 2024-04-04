@@ -35,7 +35,7 @@ const UserList = () => {
       <h3>User List</h3>
       <Grid container spacing={2}>
         {users.map(user => (
-          <Grid item key={user.id} xs={12} sm={6} md={4} lg={3}>
+          <Grid item key={user.id} xs={12} sm={6} md={4}>
             <Card>
               <CardHeader
                 avatar={<Avatar src={user.avatar} alt={`${user.first_name} ${user.last_name}`} />}
@@ -43,9 +43,6 @@ const UserList = () => {
                 subheader={user.email}
               />
               <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Additional user information can be displayed here.
-                </Typography>
               </CardContent>
             </Card>
           </Grid>
