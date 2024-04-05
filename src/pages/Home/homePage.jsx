@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import UserList from '../../components/userList/userList';
 import { Button, Container, Typography, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -7,15 +7,17 @@ const HomePage = () => {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!token) {
+      navigate('/signin')
+    }
+  }, [token, navigate])
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/signin');
   };
-
-  if (!token) {
-    navigate('/signin');
-    return null;
-  }
+  
 
   return (
     <Container maxWidth="md" sx={{ textAlign: 'center', mt: 4 }}>

@@ -8,11 +8,16 @@ import {
   Grid,
   Button,
 } from "@mui/material";
+import CreateUserDialog from "./userCreate";
+import UpdateUserDialog from "./userUpdate";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [updateDialogOpen, setUpdateDialogOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     fetchUsers();
@@ -48,11 +53,17 @@ const UserList = () => {
     }
   };
 
+  const handleUpdateUser = (user) => {
+    setSelectedUser(user);
+    setUpdateDialogOpen(true);
+  };
+
   const isLastPage = currentPage === totalPages;
 
   return (
     <div>
       <h3>User List</h3>
+      <Button onClick={() => setDialogOpen(true)}>Create New User</Button>
       <Grid container spacing={2}>
         {users.map((user) => (
           <Grid item key={user.id} xs={12} sm={6} md={4}>
@@ -68,13 +79,23 @@ const UserList = () => {
                 subheader={user.email}
               />
               <CardContent>
-                <Button
-                  onClick={() => handleDeleteUser(user.id)}
-                  variant="outlined"
-                  color="error"
-                >
-                  Delete User
-                </Button>
+                <div style={{ display: "flex" }}>
+                  <Button
+                    onClick={() => handleDeleteUser(user.id)}
+                    variant="outlined"
+                    color="error"
+                    style={{ marginRight: "8px" }}
+                  >
+                    Delete User
+                  </Button>
+                  <Button
+                    onClick={() => handleUpdateUser(user)}
+                    variant="outlined"
+                    color="primary"
+                  >
+                    Update User
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </Grid>
@@ -88,6 +109,24 @@ const UserList = () => {
           Next Page
         </Button>
       </div>
+      <CreateUserDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        setUsers={setUsers}
+      />
+      {selectedUser && (
+        <UpdateUserDialog
+          open={updateDialogOpen}
+          onClose={() => setUpdateDialogOpen(false)}
+          onUpdateUser={(updatedUserData) => {
+            const updatedUsers = users.map((user) =>
+              user.id === updatedUserData.id ? updatedUserData : user
+            );
+            setUsers(updatedUsers);
+          }}
+          userId={selectedUser.id}
+        />
+      )}
     </div>
   );
 };

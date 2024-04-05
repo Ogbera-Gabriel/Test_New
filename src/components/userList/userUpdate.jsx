@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios"; 
 import {
   Dialog,
@@ -8,32 +8,49 @@ import {
   Button,
 } from "@mui/material";
 
-const CreateUserDialog = ({ open, onClose, setUsers }) => {
+const UpdateUserDialog = ({ open, onClose, onUpdateUser, userId }) => {
   const [userData, setUserData] = useState({
     first_name: "",
     last_name: "",
     email: "",
   });
 
-  const createUser = async () => { 
+
+  useEffect(() => {
+    if (open) {
+      fetchUserData();
+    }
+  }, [open]);
+
+  const fetchUserData = async () => {
     try {
-      const response = await axios.post(
-        'https://reqres.in/api/users',
+      const response = await axios.get(`https://reqres.in/api/users/${userId}`);
+      const userDataFromApi = response.data.data;
+      setUserData(userDataFromApi);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+
+  const updateUser = async () => { 
+    try {
+      await axios.patch(
+        `https://reqres.in/api/users/${userId}`,
         userData
       );
-      setUsers(prevUsers => [response.data, ...prevUsers])
+      onUpdateUser(userData); 
       onClose();
     } catch (error) {
-      console.error('Error creating user:', error);
+      console.error('Error updating user:', error);
       throw error; 
     }
   };
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Create User</DialogTitle>
+      <DialogTitle>Update User</DialogTitle>
       <DialogContent>
-      <TextField
+        <TextField
           label="First Name"
           value={userData.first_name}
           onChange={(e) => setUserData({ ...userData, first_name: e.target.value })}
@@ -54,8 +71,8 @@ const CreateUserDialog = ({ open, onClose, setUsers }) => {
           fullWidth
           margin="normal"
         />
-        <Button variant="contained" color="primary" onClick={createUser}> 
-          Create
+        <Button variant="contained" color="primary" onClick={updateUser}> 
+          Update
         </Button>
         <Button variant="outlined" onClick={onClose} sx={{ ml: 1 }}>
           Cancel
@@ -65,4 +82,4 @@ const CreateUserDialog = ({ open, onClose, setUsers }) => {
   );
 };
 
-export default CreateUserDialog;
+export default UpdateUserDialog;

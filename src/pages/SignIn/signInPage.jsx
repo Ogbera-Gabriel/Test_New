@@ -53,7 +53,7 @@ const SignInPage = () => {
         <Typography variant="h4" gutterBottom>
           Sign In
         </Typography>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <TextField
             type="email"
             name="email"

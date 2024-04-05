@@ -29,7 +29,7 @@ const SignUpPage = () => {
         password: formData.password,
       });
       localStorage.setItem('token', response.data.token);
-      navigate('/signin'); // Redirect to Sign In page after successful registration
+      navigate('/signin'); 
     } catch (error) {
       const errorDescription = error.response;
       console.log(errorDescription);
