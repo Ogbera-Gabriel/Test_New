@@ -49,7 +49,7 @@ const UserList = () => {
       const updatedUsers = users.filter((user) => user.id !== userId);
       setUsers(updatedUsers);
     } catch (error) {
-      console.error(`Error deleting user with ID ${userId}:`, error);
+      console.error(`Error deleting user:`, error);
     }
   };
 

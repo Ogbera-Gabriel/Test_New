@@ -9,7 +9,6 @@ const SignUpPage = () => {
     password: '',
     confirmPassword: '',
   });
-  const [errorMessage, setErrorMessage] = useState(undefined);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -31,8 +30,7 @@ const SignUpPage = () => {
       localStorage.setItem('token', response.data.token);
       navigate('/signin'); 
     } catch (error) {
-      const errorDescription = error.response;
-      console.log(errorDescription);
+      console.error("Sign in error:", error);
     }
   };
 
@@ -94,11 +92,6 @@ const SignUpPage = () => {
             Sign Up
           </Button>
         </form>
-        {errorMessage && (
-          <Typography variant="body1" color="error" mt={2}>
-            {errorMessage}
-          </Typography>
-        )}
         <Typography variant="body1" mt={2}>
           Already have an account? <Link to="/signin">Sign In</Link>
         </Typography>
