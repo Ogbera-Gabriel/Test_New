@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import UserList from '../../components/userList/userList';
 import { Button, Container, Typography, Box, Switch } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
