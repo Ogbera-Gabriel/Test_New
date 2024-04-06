@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import UserList from '../../components/userList/userList';
-import { Button, Container, Typography, Grid } from '@mui/material';
+import { Button, Container, Typography, Box, Switch } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { ThemeContext } from '../../components/theme/ThemeContexeProvider';
 
 const HomePage = () => {
   const token = localStorage.getItem('token');
@@ -17,6 +18,16 @@ const HomePage = () => {
     localStorage.removeItem('token');
     navigate('/signin');
   };
+
+  const { theme, setTheme } = useContext(ThemeContext)
+
+  const handleThemeChange = () => {
+    if (theme == "dark"){
+      setTheme("light");
+    } else {
+      setTheme("dark")
+    }
+  };
   
 
   return (
@@ -27,6 +38,21 @@ const HomePage = () => {
       <Button variant="contained" onClick={handleLogout}>
         Logout
       </Button>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "10px",
+        }}
+      >
+        {theme == "dark" ? (
+          <Typography variant="subtitle2">Change to Light Mode</Typography>
+        ) : (
+          <Typography variant="subtitle2">Change to Dark Mode</Typography>
+        )}
+        <Switch onChange={handleThemeChange} />
+      </Box>
       <UserList />
     </Container>
   );

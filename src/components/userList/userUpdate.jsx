@@ -32,7 +32,7 @@ const UpdateUserDialog = ({ open, onClose, onUpdateUser, userId }) => {
     }
   };
 
-  const updateUser = async () => { 
+  const updateUserData = async () => { 
     try {
       await axios.patch(
         `https://reqres.in/api/users/${userId}`,
@@ -71,7 +71,7 @@ const UpdateUserDialog = ({ open, onClose, onUpdateUser, userId }) => {
           fullWidth
           margin="normal"
         />
-        <Button variant="contained" color="primary" onClick={updateUser}> 
+        <Button variant="contained" color="primary" onClick={updateUserData}> 
           Update
         </Button>
         <Button variant="outlined" onClick={onClose} sx={{ ml: 1 }}>
