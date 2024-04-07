@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios"; 
+import axios from "axios";
 import {
   Dialog,
   DialogTitle,
@@ -15,7 +15,6 @@ const UpdateUserDialog = ({ open, onClose, onUpdateUser, userId }) => {
     email: "",
   });
 
-
   useEffect(() => {
     if (open) {
       fetchUserData();
@@ -28,21 +27,18 @@ const UpdateUserDialog = ({ open, onClose, onUpdateUser, userId }) => {
       const userDataFromApi = response.data.data;
       setUserData(userDataFromApi);
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error("Error fetching user data:", error);
     }
   };
 
-  const updateUserData = async () => { 
+  const updateUserData = async () => {
     try {
-      await axios.patch(
-        `https://reqres.in/api/users/${userId}`,
-        userData
-      );
-      onUpdateUser(userData); 
+      await axios.patch(`https://reqres.in/api/users/${userId}`, userData);
+      onUpdateUser(userData);
       onClose();
     } catch (error) {
-      console.error('Error updating user:', error);
-      throw error; 
+      console.error("Error updating user:", error);
+      throw error;
     }
   };
 
@@ -51,27 +47,39 @@ const UpdateUserDialog = ({ open, onClose, onUpdateUser, userId }) => {
       <DialogTitle>Update User</DialogTitle>
       <DialogContent>
         <TextField
+          name="firstName"
           label="First Name"
           value={userData.first_name}
-          onChange={(e) => setUserData({ ...userData, first_name: e.target.value })}
+          onChange={(e) =>
+            setUserData({ ...userData, first_name: e.target.value })
+          }
           fullWidth
           margin="normal"
         />
         <TextField
+          name="lastName"
           label="Last Name"
           value={userData.last_name}
-          onChange={(e) => setUserData({ ...userData, last_name: e.target.value })}
+          onChange={(e) =>
+            setUserData({ ...userData, last_name: e.target.value })
+          }
           fullWidth
           margin="normal"
         />
         <TextField
+          name="email"
           label="Email"
           value={userData.email}
           onChange={(e) => setUserData({ ...userData, email: e.target.value })}
           fullWidth
           margin="normal"
         />
-        <Button variant="contained" color="primary" onClick={updateUserData}> 
+        <Button
+          className="update-user-button"
+          variant="contained"
+          color="primary"
+          onClick={updateUserData}
+        >
           Update
         </Button>
         <Button variant="outlined" onClick={onClose} sx={{ ml: 1 }}>

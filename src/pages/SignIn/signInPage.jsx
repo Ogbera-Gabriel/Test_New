@@ -79,8 +79,7 @@ const SignInPage = () => {
           </Button>
         </form>
         <Typography variant="body1" mt={2}>
-          Don't have an account? 
-          <Link to="/signup">Sign Up</Link>
+          Don't have an account? <Link to="/signup">Sign Up</Link>
         </Typography>
       </Box>
     </Box>

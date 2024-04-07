@@ -93,8 +93,7 @@ const SignUpPage = () => {
           </Button>
         </form>
         <Typography variant="body1" mt={2}>
-          Already have an account? 
-          <Link to="/signin">Sign In</Link>
+          Already have an account? <Link to="/signin">Sign In</Link>
         </Typography>
       </Box>
     </Box>

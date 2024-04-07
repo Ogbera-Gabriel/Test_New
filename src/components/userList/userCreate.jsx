@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios"; 
+import axios from "axios";
 import {
   Dialog,
   DialogTitle,
@@ -15,17 +15,17 @@ const CreateUserDialog = ({ open, onClose, setUsers }) => {
     email: "",
   });
 
-  const createUser = async () => { 
+  const createUser = async () => {
     try {
       const response = await axios.post(
-        'https://reqres.in/api/users',
+        "https://reqres.in/api/users",
         userData
       );
-      setUsers(prevUsers => [response.data, ...prevUsers])
+      setUsers((prevUsers) => [response.data, ...prevUsers]);
       onClose();
     } catch (error) {
-      console.error('Error creating user:', error);
-      throw error; 
+      console.error("Error creating user:", error);
+      throw error;
     }
   };
 
@@ -33,28 +33,35 @@ const CreateUserDialog = ({ open, onClose, setUsers }) => {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Create User</DialogTitle>
       <DialogContent>
-      <TextField
+        <TextField
+          name="firstName"
           label="First Name"
           value={userData.first_name}
-          onChange={(e) => setUserData({ ...userData, first_name: e.target.value })}
+          onChange={(e) =>
+            setUserData({ ...userData, first_name: e.target.value })
+          }
           fullWidth
           margin="normal"
         />
         <TextField
+          name="lastName"
           label="Last Name"
           value={userData.last_name}
-          onChange={(e) => setUserData({ ...userData, last_name: e.target.value })}
+          onChange={(e) =>
+            setUserData({ ...userData, last_name: e.target.value })
+          }
           fullWidth
           margin="normal"
         />
         <TextField
+          name="email"
           label="Email"
           value={userData.email}
           onChange={(e) => setUserData({ ...userData, email: e.target.value })}
           fullWidth
           margin="normal"
         />
-        <Button variant="contained" color="primary" onClick={createUser}> 
+        <Button className="create-button" variant="contained" color="primary" onClick={createUser}>
           Create
         </Button>
         <Button variant="outlined" onClick={onClose} sx={{ ml: 1 }}>
