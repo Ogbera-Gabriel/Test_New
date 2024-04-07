@@ -1,6 +1,3 @@
-Sure, here's a sample README.md file for your project:
-
-```markdown
 # User Management System
 
 This is a simple user management system built with React and Material-UI. It allows users to sign up, sign in, view a list of users, create new users, update existing users, and delete users.
