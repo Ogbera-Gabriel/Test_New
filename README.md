@@ -35,7 +35,7 @@ This is a simple user management system built with React and Material-UI. It all
 
 4. Run the application:
    ```bash
-   npm start
+   npm run dev
    ```
 
 ## Technologies Used
