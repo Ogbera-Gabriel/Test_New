@@ -4,33 +4,33 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Typography, TextField, Button, Box } from '@mui/material';
 
 const SignUpPage = () => {
-  const [formData, setFormData] = useState({
+  const [user, setUser] = useState({
     email: '',
     password: '',
     confirmPassword: '',
   });
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = ({ target: { name, value } }) => {
+    setUser(prevUser => ({ ...prevUser, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (user.password !== user.confirmPassword) {
       alert('Passwords do not match');
       return;
     }
 
     try {
-      const response = await axios.post('https://reqres.in/api/register', {
-        email: formData.email,
-        password: formData.password,
-      });
+      const response = await axios.post(
+        'https://reqres.in/api/register',
+        { email: user.email, password: user.password }
+      );
       localStorage.setItem('token', response.data.token);
-      navigate('/signin'); 
+      navigate('/signin');
     } catch (error) {
-      console.error("Sign in error:", error);
+      console.error('Sign up error:', error);
     }
   };
 
@@ -62,7 +62,7 @@ const SignUpPage = () => {
             label="Email"
             type="email"
             name="email"
-            value={formData.email}
+            value={user.email}
             onChange={handleChange}
             required
             fullWidth
@@ -72,7 +72,7 @@ const SignUpPage = () => {
             label="Password"
             type="password"
             name="password"
-            value={formData.password}
+            value={user.password}
             onChange={handleChange}
             required
             fullWidth
@@ -82,7 +82,7 @@ const SignUpPage = () => {
             label="Confirm Password"
             type="password"
             name="confirmPassword"
-            value={formData.confirmPassword}
+            value={user.confirmPassword}
             onChange={handleChange}
             required
             fullWidth

@@ -4,48 +4,49 @@ import { Link, useNavigate } from "react-router-dom";
 import { Typography, TextField, Button, Box } from "@mui/material";
 
 const SignInPage = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: '',
   });
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     try {
-      const response = await axios.post("https://reqres.in/api/login", {
-        email: formData.email,
-        password: formData.password,
-      });
-      localStorage.setItem("token", response.data.token);
-      navigate("/");
+      const response = await axios.post('https://reqres.in/api/login', credentials);
+      localStorage.setItem('token', response.data.token);
+      navigate('/');
     } catch (error) {
-      console.error("Sign in error:", error);
+      console.error('Sign in error:', error);
     }
   };
 
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
       }}
     >
       <Box
         sx={{
           p: 4,
           maxWidth: 400,
-          width: "100%",
-          bgcolor: "background.paper",
+          width: '100%',
+          bgcolor: 'background.paper',
           boxShadow: 1,
           borderRadius: 1,
         }}
@@ -58,7 +59,7 @@ const SignInPage = () => {
             type="email"
             name="email"
             label="Enter Email"
-            value={formData.email}
+            value={credentials.email}
             onChange={handleChange}
             required
             fullWidth
@@ -68,7 +69,7 @@ const SignInPage = () => {
             type="password"
             name="password"
             label="Enter your Password"
-            value={formData.password}
+            value={credentials.password}
             onChange={handleChange}
             required
             fullWidth
